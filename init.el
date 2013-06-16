@@ -78,6 +78,8 @@
 (require 'init-rails)
 (require 'init-sql)
 
+(require 'init-auctex)
+
 (require 'init-paredit)
 (require 'init-lisp)
 (require 'init-slime)
