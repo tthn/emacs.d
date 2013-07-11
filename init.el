@@ -66,6 +66,7 @@
 (require 'init-csv)
 (require 'init-erlang)
 (require 'init-javascript)
+(require 'init-cc)
 (require 'init-sh)
 (require 'init-php)
 (require 'init-org)
@@ -129,6 +130,8 @@
 ;;----------------------------------------------------------------------------
 (require 'init-locales)
 
+(require 'init-tramp)
+(require 'init-dash)
 
 ;; Local Variables:
 ;; coding: utf-8

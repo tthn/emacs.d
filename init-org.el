@@ -1,10 +1,28 @@
+;; chinese font
+(eval-when-compile (require 'cl))
+
+(defun set-font (english chinese english-size chinese-size)
+  (set-face-attribute 'default nil :font
+                      (format "%s:pixelsize=%d" english english-size))
+  (dolist (charset '(kana han symbol cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font) charset
+                      (font-spec :family chinese :size chinese-size))))
+
+(ecase system-type
+  (gnu/linux
+   (set-face-bold-p 'bold nil)
+   (set-face-underline-p 'bold nil)
+   (set-font "monofur" "vera Sans YuanTi Mono" 20 20))
+  (darwin
+   (set-font "Deja Vu Sans Mono" "STHeiti" 12 14)))
+
+;; 
 (when (< emacs-major-version 24)
   (require-package 'org))
 (require-package 'org-fstree)
 (when *is-a-mac*
   (require-package 'org-mac-link-grabber)
   (require-package 'org-mac-iCal))
-
 
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
