@@ -80,5 +80,4 @@
   (interactive)
   (browse-url (concat "file://" (buffer-file-name))))
 
-
 (provide 'init-utils)

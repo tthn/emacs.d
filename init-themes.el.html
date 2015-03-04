@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- Created by htmlize-1.47 in css mode. -->
+<html>
+  <head>
+    <title>init-themes.el</title>
+    <style type="text/css">
+    <!--
+      body {
+        color: #52676f;
+        background-color: #fcf4dc;
+      }
+      .org-builtin {
+        /* font-lock-builtin-face */
+        color: #5859b7;
+      }
+      .org-comment {
+        /* font-lock-comment-face */
+        color: #708183;
+        font-style: italic;
+      }
+      .org-comment-delimiter {
+        /* font-lock-comment-delimiter-face */
+        color: #81908f;
+        font-style: italic;
+      }
+      .org-constant {
+        /* font-lock-constant-face */
+        color: #5859b7;
+      }
+      .org-doc {
+        /* font-lock-doc-face */
+        color: #c61b6e;
+      }
+      .org-function-name {
+        /* font-lock-function-name-face */
+        color: #2075c7;
+      }
+      .org-keyword {
+        /* font-lock-keyword-face */
+        color: #728a05;
+      }
+      .org-variable-name {
+        /* font-lock-variable-name-face */
+        color: #a57705;
+      }
+
+      a {
+        color: inherit;
+        background-color: inherit;
+        font: inherit;
+        text-decoration: inherit;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    -->
+    </style>
+  </head>
+  <body>
+    <pre>
+(<span class="org-keyword">when</span> (&lt; emacs-major-version 24)
+  (require-package 'color-theme))
+
+(require-package 'color-theme-sanityinc-solarized)
+(require-package 'color-theme-sanityinc-tomorrow)
+
+<span class="org-comment-delimiter">;;</span><span class="org-comment">------------------------------------------------------------------------------
+</span><span class="org-comment-delimiter">;; </span><span class="org-comment">Old-style color theming support (via color-theme.el)
+</span><span class="org-comment-delimiter">;;</span><span class="org-comment">------------------------------------------------------------------------------
+</span>(<span class="org-keyword">defcustom</span> <span class="org-variable-name">window-system-color-theme</span> 'color-theme-sanityinc-solarized-dark
+  <span class="org-doc">"Color theme to use in window-system frames.
+If Emacs' native theme support is available, this setting is
+ignored: use `</span><span class="org-doc"><span class="org-constant">custom-enabled-themes</span></span><span class="org-doc">' instead."</span>
+  <span class="org-builtin">:type</span> 'symbol)
+
+(<span class="org-keyword">defcustom</span> <span class="org-variable-name">tty-color-theme</span> 'color-theme-terminal
+  <span class="org-doc">"Color theme to use in TTY frames.
+If Emacs' native theme support is available, this setting is
+ignored: use `</span><span class="org-doc"><span class="org-constant">custom-enabled-themes</span></span><span class="org-doc">' instead."</span>
+  <span class="org-builtin">:type</span> 'symbol)
+
+(<span class="org-keyword">unless</span> (boundp 'custom-enabled-themes)
+  (<span class="org-keyword">defun</span> <span class="org-function-name">color-theme-terminal</span> ()
+    (interactive)
+    (color-theme-sanityinc-solarized-dark))
+
+  (<span class="org-keyword">defun</span> <span class="org-function-name">apply-best-color-theme-for-frame-type</span> (frame)
+    (<span class="org-keyword">with-selected-frame</span> frame
+      (funcall (<span class="org-keyword">if</span> window-system
+                   window-system-color-theme
+                 tty-color-theme))))
+
+  (<span class="org-keyword">defun</span> <span class="org-function-name">reapply-color-themes</span> ()
+    (interactive)
+    (mapcar 'apply-best-color-theme-for-frame-type (frame-list)))
+
+  (set-variable 'color-theme-is-global nil)
+  (add-hook 'after-make-frame-functions 'apply-best-color-theme-for-frame-type)
+  (add-hook 'after-init-hook 'reapply-color-themes)
+  (apply-best-color-theme-for-frame-type (selected-frame)))
+
+
+<span class="org-comment-delimiter">;;</span><span class="org-comment">------------------------------------------------------------------------------
+</span><span class="org-comment-delimiter">;; </span><span class="org-comment">New-style theme support, in which per-frame theming is not possible
+</span><span class="org-comment-delimiter">;;</span><span class="org-comment">------------------------------------------------------------------------------
+</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">If you don't customize it, this is the theme you get.
+</span>(setq-default custom-enabled-themes '(deeper-blue))
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Ensure that themes will be applied even if they have not been customized
+</span>(<span class="org-keyword">defun</span> <span class="org-function-name">reapply-themes</span> ()
+  <span class="org-doc">"Forcibly load the themes listed in `</span><span class="org-doc"><span class="org-constant">custom-enabled-themes</span></span><span class="org-doc">'."</span>
+  (<span class="org-keyword">dolist</span> (theme custom-enabled-themes)
+    (<span class="org-keyword">unless</span> (custom-theme-p theme)
+      (load-theme theme)))
+  (custom-set-variables `(custom-enabled-themes (quote ,custom-enabled-themes))))
+
+(add-hook 'after-init-hook 'reapply-themes)
+
+
+<span class="org-comment-delimiter">;;</span><span class="org-comment">------------------------------------------------------------------------------
+</span><span class="org-comment-delimiter">;; </span><span class="org-comment">Toggle between light and dark
+</span><span class="org-comment-delimiter">;;</span><span class="org-comment">------------------------------------------------------------------------------
+</span>(<span class="org-keyword">defun</span> <span class="org-function-name">light</span> ()
+  <span class="org-doc">"Activate a light color theme."</span>
+  (interactive)
+  (color-theme-sanityinc-solarized-light))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">dark</span> ()
+  <span class="org-doc">"Activate a dark color theme."</span>
+  (interactive)
+  (color-theme-sanityinc-solarized-dark))
+
+
+(<span class="org-keyword">provide</span> '<span class="org-constant">init-themes</span>)
+</pre>
+  </body>
+</html>

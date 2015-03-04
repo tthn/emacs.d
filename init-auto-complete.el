@@ -2,7 +2,7 @@
 (require 'auto-complete-config)
 (global-auto-complete-mode t)
 (setq ac-expand-on-auto-complete nil)
-(setq ac-auto-start nil)
+(setq ac-auto-start t)
 (setq ac-dwim nil) ; To get pop-ups with docs even if a word is uniquely completed
 
 ;;----------------------------------------------------------------------------
@@ -24,7 +24,6 @@
   (add-to-list 'completion-at-point-functions 'sanityinc/auto-complete-at-point))
 
 (add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
-
 
 (set-default 'ac-sources
              '(ac-source-imenu

@@ -71,7 +71,7 @@
 (require 'init-php)
 (require 'init-org)
 (require 'init-nxml)
-(require 'init-css)
+;(require 'init-css)
 (require 'init-haml)
 (require 'init-python-mode)
 (require 'init-haskell)
@@ -132,6 +132,9 @@
 
 (require 'init-tramp)
 (require 'init-dash)
+
+;; scheme
+(require 'init-scheme)
 
 ;; Local Variables:
 ;; coding: utf-8

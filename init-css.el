@@ -37,21 +37,21 @@
 
 
 ;;; CSS flymake
-(require-package 'flymake-css)
-(defun maybe-flymake-css-load ()
-  "Activate flymake-css as necessary, but not in derived modes."
-  (when (eq major-mode 'css-mode)
-    (flymake-css-load)))
-(add-hook 'css-mode-hook 'maybe-flymake-css-load)
+;(require-package 'flymake-css)
+;; (defun maybe-flymake-css-load ()
+;;   "Activate flymake-css as necessary, but not in derived modes."
+;;   (when (eq major-mode 'css-mode)
+;;     (flymake-css-load)))
+;; (add-hook 'css-mode-hook 'maybe-flymake-css-load)
 
 
 
 ;;; SASS and SCSS
 (require-package 'sass-mode)
 (require-package 'scss-mode)
-(require-package 'flymake-sass)
-(add-hook 'sass-mode-hook 'flymake-sass-load)
-(add-hook 'scss-mode-hook 'flymake-sass-load)
+;(require-package 'flymake-sass)
+;(add-hook 'sass-mode-hook 'flymake-sass-load)
+;(add-hook 'scss-mode-hook 'flymake-sass-load)
 (setq-default scss-compile-at-save nil)
 
 
